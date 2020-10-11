@@ -15,7 +15,7 @@ function preload()
 }
 
 function setup() {
-	createCanvas(800, 700);
+	createCanvas(800, 400);
 	rectMode(CENTER);
 	
 
@@ -23,33 +23,33 @@ function setup() {
 	packageSprite.addImage(packageIMG)
 	packageSprite.scale=0.2
 
-	helicopterSprite=createSprite(width/2, 200, 10,10);
+	helicopterSprite=createSprite(width/2, 100, 10,10);
 	helicopterSprite.addImage(helicopterIMG)
 	helicopterSprite.scale=0.6
 
-	groundSprite=createSprite(width/2, height-35, width,10);
-	groundSprite.shapeColor=color(255)
+	groundSprite=createSprite(width/2, height-5, width,10);
+	groundSprite.shapeColor="brown";
 
 
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.5, isStatic:true});
+	packageBody = Bodies.circle(width/2 , 100 , 5 , {restitution:0.5, isStatic:true});
 	World.add(world, packageBody);
 	
 
 	//Create a Ground
-	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
+	ground = Bodies.rectangle(width/2, height-5, width, 10 , {isStatic:true} );
  	World.add(world, ground);
 	
-	boxPosition = width/2 - 100;
-	boxY = 400; 
-	left = createSprite(boxPosition, boxY, 20,200);
-	right = createSprite(boxPosition+100, boxY, 20, 200);
-	base = createSprite(boxPosition+50, boxY+50,100,20);
-	leftBody = Bodies.rectangle(boxPosition, boxY, 20,200,{isStatic:true});
-	rightBody = Bodies.rectangle(boxPosition+100, boxY, 20,200,{isStatic:true});
-	baseBody = Bodies.rectangle(boxPosition+50, boxY+50, 100,20,{isStatic:true});
+	boxPosition = width/2 + 50;
+	boxY = height-50; 
+	left = createSprite(boxPosition, boxY, 20,100);
+	right = createSprite(boxPosition+200, boxY, 20, 100);
+	base = createSprite(boxPosition+100, boxY+45,200,20);
+	leftBody = Bodies.rectangle(boxPosition, boxY, 20,100,{isStatic:true});
+	rightBody = Bodies.rectangle(boxPosition+200, boxY, 20,100,{isStatic:true});
+	baseBody = Bodies.rectangle(boxPosition+100, boxY+45, 200,20,{isStatic:true});
 	left.shapeColor="red";
 	right.shapeColor="red";
 	base.shapeColor="red";
@@ -79,14 +79,20 @@ function keyPressed() {
  if (keyCode === DOWN_ARROW) {
     // Look at the hints in the document and understand how to make the package body fall only on
 	Matter.Body.setStatic(packageBody,false);
+	
   }
   if (keyCode === LEFT_ARROW) {
    helicopterSprite.x= helicopterSprite.x-15;
+   translation={x:-15,y:0}
+	Matter.Body.translate(packageBody, translation)
+	
   }
   if (keyCode === RIGHT_ARROW) {
 	helicopterSprite.x= helicopterSprite.x+15;
+	translation={x:+15,y:0}
+	Matter.Body.translate(packageBody, translation)
+	
   }
 }
-
 
 
